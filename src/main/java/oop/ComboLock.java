@@ -13,35 +13,91 @@ public class ComboLock {
 
     // Instance variables (fields)
     // Code combination required to open this lock
+    private int digit1;
+    private int digit2;
+    private int digit3;
+    private LockStateEnum state;
 
-    //TODO - create instance fields to store three code digits required to open lock
+    public ComboLock(int digit1, int digit2, int digit3)
+    {
+        this.digit1 = digit1;
+        this.digit2 = digit2;
+        this.digit3 = digit3;
+        this.state = LockStateEnum.NONE_CORRECT;
+    }
 
-    // constructor
-    // initialize/set the correct combination code for the lock
-    //TODO - constructor to initialize lock
+    public int getDigit1()
+    {
+        return this.digit1;
+    }
 
-    public void reset() {
-        //TODO reset the lock to start state
+    public void setDigit1(int digit1)
+    {
+        this.digit1 = digit1;
+    }
+
+    public int getDigit2()
+    {
+        return this.digit2;
+    }
+
+    public void setDigit2(int digit2)
+    {
+        this.digit2 = digit2;
+    }
+
+    public int getDigit3()
+    {
+        return this.digit3;
+    }
+
+    public void setDigit3(int digit3)
+    {
+        this.digit3 = digit3;
+    }
+
+
+//    ------------------------------
+
+    public void reset()
+    {
+        this.state = LockStateEnum.NONE_CORRECT;
     }
 
     public void turnRight(int number) {
-        //TODO how will turning right to the number
-        // change the state of the lock?
+
+        if(number > 0 && number < 40)
+        {
+            if(this.state == LockStateEnum.NONE_CORRECT && number == digit1)
+            {
+                this.state = LockStateEnum.FIRST_CORRECT;
+            }
+            if (this.state == LockStateEnum.SECOND_CORRECT && digit3 == number)
+            {
+                this.state = LockStateEnum.THIRD_CORRECT;
+            }
+        }
+        else {
+            System.out.println("Not a valid number");
+        }
+
     }
 
     public void turnLeft(int number) {
-        //TODO how will turning right to the number
-        // change the state of the lock?
+        if(number > 0 && number < 40)
+        {
+            if (this.state == LockStateEnum.FIRST_CORRECT && digit2 == number)
+            {
+                this.state = LockStateEnum.SECOND_CORRECT;
+            }
+        }
+        else {
+            System.out.println("Not a valid number");
+        }
     }
 
     public boolean open() {
-        //TODO logic for testing if lock is open
-        /*if (   ???  )
-                return true;
-
-        */
-
-        return false;
+        return this.state == LockStateEnum.THIRD_CORRECT;
     }
 
     //TODO
